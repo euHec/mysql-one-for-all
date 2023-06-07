@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS `SpotifyClone`;
 CREATE SCHEMA IF NOT EXISTS `SpotifyClone`;
 USE `SpotifyClone` ;
 
