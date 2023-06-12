@@ -115,7 +115,7 @@ INSERT INTO `SpotifyClone`.`Histórico` (user_id, song_id, date) VALUES
 (6, 1, '2017-10-12 12:35:20'),
 (7, 4, '2011-12-15 22:30:49'),
 (8, 4, '2012-03-17 14:56:41'),
-(9, 7, '2022-02-24 21:14:22'),
+(9, 9, '2022-02-24 21:14:22'),
 (10, 3, '2015-12-13 08:30:22');
 
 CREATE TABLE IF NOT EXISTS `SpotifyClone`.`Seguidores` (
