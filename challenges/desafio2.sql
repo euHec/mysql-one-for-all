@@ -1,4 +1,4 @@
 SELECT
-	(SELECT COUNT(*) FROM SpotifyClone.Canções) AS cancoes,
-	(SELECT COUNT(*) FROM SpotifyClone.Artista) AS artistas,
-    (SELECT COUNT(*)FROM SpotifyClone.Album) AS albuns;
+	(SELECT COUNT(*) FROM SpotifyClone.songs) AS cancoes,
+	(SELECT COUNT(*) FROM SpotifyClone.artists) AS artistas,
+    (SELECT COUNT(*)FROM SpotifyClone.albuns) AS albuns;

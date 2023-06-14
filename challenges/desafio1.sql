@@ -2,13 +2,13 @@ DROP DATABASE IF EXISTS `SpotifyClone`;
 CREATE SCHEMA IF NOT EXISTS `SpotifyClone`;
 USE `SpotifyClone` ;
 
-CREATE TABLE IF NOT EXISTS `SpotifyClone`.`Artista` (
+CREATE TABLE IF NOT EXISTS `SpotifyClone`.`artists` (
   `artist_id` INT NOT NULL,
   `name` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`artist_id`)
 ) ENGINE = InnoDB;
 
-INSERT INTO `SpotifyClone`.`Artista` (artist_id, name) VALUES
+INSERT INTO `SpotifyClone`.`artists` (artist_id, name) VALUES
 (1, 'Beyoncé'),
 (2, 'Queen'),
 (3, 'Elis Regina'),
@@ -16,15 +16,15 @@ INSERT INTO `SpotifyClone`.`Artista` (artist_id, name) VALUES
 (5, 'Blind Guardian'),
 (6, 'Nina Simone');
 
-CREATE TABLE IF NOT EXISTS `SpotifyClone`.`Album` (
+CREATE TABLE IF NOT EXISTS `SpotifyClone`.`albuns` (
   `album_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `artist_id` INT NOT NULL,
   PRIMARY KEY (`album_id`),
-  FOREIGN KEY (`artist_id`) REFERENCES `SpotifyClone`.`Artista` (`artist_id`)
+  FOREIGN KEY (`artist_id`) REFERENCES `SpotifyClone`.`artists` (`artist_id`)
 ) ENGINE = InnoDB;
 
-INSERT INTO `SpotifyClone`.`Album` (album_id, name, artist_id) VALUES
+INSERT INTO `SpotifyClone`.`albuns` (album_id, name, artist_id) VALUES
 (1, 'Renaissance', 1),
 (2, 'Jazz', 2),
 (3, 'Hot Space', 2),
@@ -34,17 +34,17 @@ INSERT INTO `SpotifyClone`.`Album` (album_id, name, artist_id) VALUES
 (7, 'Somewhere Far Beyond', 5),
 (8, 'I Put A Spell On You', 6);
 
-CREATE TABLE IF NOT EXISTS `SpotifyClone`.`Canções` (
+CREATE TABLE IF NOT EXISTS `SpotifyClone`.`songs` (
   `song_id` INT NOT NULL AUTO_INCREMENT,
   `album_id` INT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   `duration_seconds` INT NOT NULL,
   `release_year` YEAR NOT NULL,
   PRIMARY KEY (`song_id`),
-  FOREIGN KEY (`album_id`) REFERENCES `SpotifyClone`.`Album` (`album_id`)
+  FOREIGN KEY (`album_id`) REFERENCES `SpotifyClone`.`albuns` (`album_id`)
 ) ENGINE = InnoDB;
 
-INSERT INTO `SpotifyClone`.`Canções` (song_id, album_id, name, duration_seconds, release_year) VALUES
+INSERT INTO `SpotifyClone`.`songs` (song_id, album_id, name, duration_seconds, release_year) VALUES
 (1, 1, "BREAK MY SOUL", 279, 2022),
 (2, 1, "VIRGO'S GROOVE", 369, 2022),
 (3, 1, "ALIEN SUPERSTAR", 116, 2022),
@@ -56,30 +56,30 @@ INSERT INTO `SpotifyClone`.`Canções` (song_id, album_id, name, duration_second
 (9, 7, "The Bard's Song", 244, 2007),
 (10, 8, "Feeling Good", 100, 2012);
 
-CREATE TABLE IF NOT EXISTS `SpotifyClone`.`Planos` (
+CREATE TABLE IF NOT EXISTS `SpotifyClone`.`plans` (
   `plan_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(15) NOT NULL,
   `price` DECIMAL(5,2) NOT NULL,
   PRIMARY KEY (`plan_id`)
 ) ENGINE = InnoDB;
 
-INSERT INTO `SpotifyClone`.`Planos` (plan_id, name, price) VALUES
+INSERT INTO `SpotifyClone`.`plans` (plan_id, name, price) VALUES
 (1, 'gratuito', 0),
 (2, 'pessoal', 6.99),
 (3, 'universitário', 5.99),
 (4, 'familiar', 7.99);
 
-CREATE TABLE IF NOT EXISTS `SpotifyClone`.`Usuário` (
+CREATE TABLE IF NOT EXISTS `SpotifyClone`.`users` (
   `user_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(70) NOT NULL,
   `age` INT NOT NULL,
   `plan_id` INT NOT NULL,
   `date_signing` DATE NOT NULL,
   PRIMARY KEY (`user_id`),
-  FOREIGN KEY (`plan_id`) REFERENCES `SpotifyClone`.`Planos` (`plan_id`)
+  FOREIGN KEY (`plan_id`) REFERENCES `SpotifyClone`.`plans` (`plan_id`)
 ) ENGINE = InnoDB;
 
-INSERT INTO `SpotifyClone`.`Usuário` (user_id, name, age, plan_id, date_signing) VALUES
+INSERT INTO `SpotifyClone`.`users` (user_id, name, age, plan_id, date_signing) VALUES
 (1, 'Barbara Liskov', 82, 1, '2019-10-20'),
 (2, 'Robert Cecil Martin', 58, 1, '2017-01-06'),
 (3, 'Ada Lovelace', 37, 4, '2017-12-30'),
@@ -91,16 +91,16 @@ INSERT INTO `SpotifyClone`.`Usuário` (user_id, name, age, plan_id, date_signing
 (9, 'Judith Butler', 45, 2, '2020-05-13'),
 (10, 'Jorge Amado', 58, 2, '2017-02-17');
 
-CREATE TABLE IF NOT EXISTS `SpotifyClone`.`Histórico` (
+CREATE TABLE IF NOT EXISTS `SpotifyClone`.`history` (
   `user_id` INT NOT NULL,
   `song_id` INT NOT NULL,
   `date` DATETIME NOT NULL,
   PRIMARY KEY (`user_id`, `song_id`),
-  FOREIGN KEY (`user_id`)  REFERENCES `SpotifyClone`.`Usuário` (`user_id`),
-  FOREIGN KEY (`song_id`) REFERENCES `SpotifyClone`.`Canções` (`song_id`)
+  FOREIGN KEY (`user_id`)  REFERENCES `SpotifyClone`.`users` (`user_id`),
+  FOREIGN KEY (`song_id`) REFERENCES `SpotifyClone`.`songs` (`song_id`)
 ) ENGINE = InnoDB;
 
-INSERT INTO `SpotifyClone`.`Histórico` (user_id, song_id, date) VALUES
+INSERT INTO `SpotifyClone`.`history` (user_id, song_id, date) VALUES
 (1, 8, '2022-02-28 10:45:55'),
 (1, 2, '2020-05-02 05:30:35'),
 (1, 10, '2020-03-06 11:22:33'),
@@ -118,15 +118,15 @@ INSERT INTO `SpotifyClone`.`Histórico` (user_id, song_id, date) VALUES
 (9, 9, '2022-02-24 21:14:22'),
 (10, 3, '2015-12-13 08:30:22');
 
-CREATE TABLE IF NOT EXISTS `SpotifyClone`.`Seguidores` (
+CREATE TABLE IF NOT EXISTS `SpotifyClone`.`followers` (
   `user_id` INT NOT NULL,
   `artist_id` INT NOT NULL,
   PRIMARY KEY (`user_id`, `artist_id`),
-  FOREIGN KEY (`artist_id`) REFERENCES `SpotifyClone`.`Artista` (`artist_id`),
-  FOREIGN KEY (`user_id`) REFERENCES `SpotifyClone`.`Usuário` (`user_id`)
+  FOREIGN KEY (`artist_id`) REFERENCES `SpotifyClone`.`artists` (`artist_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `SpotifyClone`.`users` (`user_id`)
 ) ENGINE = InnoDB;
 
-INSERT INTO `SpotifyClone`.`Seguidores` (user_id, artist_id) VALUES
+INSERT INTO `SpotifyClone`.`followers` (user_id, artist_id) VALUES
 (1, 1),
 (1, 2),
 (1, 3),

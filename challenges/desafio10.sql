@@ -2,8 +2,8 @@ CREATE TABLE IF NOT EXISTS `SpotifyClone`.`favorite_songs` (
   `user_id` INT NOT NULL,
   `song_id` INT NOT NULL,
   PRIMARY KEY (`user_id`, `song_id`),
-  FOREIGN KEY (`user_id`) REFERENCES `SpotifyClone`.`Usuário` (`user_id`),
-  FOREIGN KEY (`song_id`) REFERENCES `SpotifyClone`.`Canções` (`song_id`)
+  FOREIGN KEY (`user_id`) REFERENCES `SpotifyClone`.`users` (`user_id`),
+  FOREIGN KEY (`song_id`) REFERENCES `SpotifyClone`.`songs` (`song_id`)
 ) ENGINE = InnoDB;
 
 INSERT INTO `SpotifyClone`.`favorite_songs` (user_id, song_id) VALUES
